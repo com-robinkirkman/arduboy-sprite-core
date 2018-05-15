@@ -15,8 +15,15 @@
 
 class SpriteCore : public ArduboyCore {
 public:
+	template <typename T> struct List {
+		T *data;
+		size_t len;
+	};
+
 	static void begin();
-	static void display(const XYSprite *sprites, int len);
+	static void display(XYSprite* sprites, size_t len);
+	static void display(List<XYSprite>* sprites);
+	static void display(List<List<XYSprite>*>* sprites);
 	static void write(int x, int y, const char *text, XYSprite *sprites);
 };
 
