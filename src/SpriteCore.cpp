@@ -24,7 +24,7 @@ void SpriteCore::display(const XYSprite *sprites, int len) {
 void SpriteCore::write(int x, int y, const char *text, XYSprite *sprites) {
 	uint8_t bg_raster[5];
 	Sprite bg(5, 7, bg_raster);
-	for (; *text; ++text, ++sprites) {
+	for (; *text; ++text, ++sprites, x += 6) {
 		sprites->setX(x);
 		sprites->setY(y);
 		sprites->setForeground(Sprite(*text));
