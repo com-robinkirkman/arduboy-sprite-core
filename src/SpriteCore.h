@@ -20,6 +20,15 @@ public:
 		size_t len;
 	};
 
+	template <typename T, size_t N> struct StaticList {
+		T data[N];
+		size_t len = N;
+
+		operator List<T> const() {
+			return List<T> { data, len };
+		}
+	};
+
 	static void begin();
 	static void display(XYSprite* sprites, size_t len);
 	static void display(List<XYSprite>* sprites);

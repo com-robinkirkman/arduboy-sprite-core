@@ -12,12 +12,12 @@ void SpriteCore::begin() {
 }
 
 void SpriteCore::display(XYSprite *sprites, size_t len) {
-	List<XYSprite> list = {sprites, len };
+	List<XYSprite> list = {sprites, len};
 	display(&list);
 }
 
 void SpriteCore::display(List<XYSprite>* sprites) {
-	List<List<XYSprite>*> lists = { &sprites, 1 };
+	List<List<XYSprite>*> lists = {&sprites, 1};
 	display(&lists);
 }
 void SpriteCore::display(List<List<XYSprite>*>* sprites) {
