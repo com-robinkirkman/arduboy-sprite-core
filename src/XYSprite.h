@@ -18,8 +18,8 @@ public:
 		kBlackOnWhite = 2,
 	};
 
-	XYSprite() : XYSprite(kNone, nullptr, nullptr, 0, 0) {}
-	XYSprite(RasterMode mode, const Sprite *foreground, const Sprite *background, int x, int y);
+	XYSprite() : XYSprite(0, 0, kNone, nullptr, nullptr) {}
+	XYSprite(int x, int y, RasterMode mode, const Sprite *foreground, const Sprite *background = nullptr);
 
 	int x() const { return x_; }
 	int y() const { return y_; }
