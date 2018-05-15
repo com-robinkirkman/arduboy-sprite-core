@@ -10,7 +10,7 @@
 XYSprite::XYSprite(int x, int y, RasterMode mode, const Sprite *foreground, const Sprite *background) :
 mode_(mode), foreground_(foreground), background_(background), x_(x), y_(y) {}
 
-inline void XYSprite::render(Sprite::RenderMode render_mode, const Sprite *sprite_, int page_num, uint8_t *page) const {
+void XYSprite::render(Sprite::RenderMode render_mode, const Sprite *sprite_, int page_num, uint8_t *page) const {
 	int stripe_y = page_num << 3;
 	int width = sprite_->width();
 	if (x_ + width > 128)

@@ -47,7 +47,7 @@ void Sprite::render(RenderMode mode, int x, int y, int w, uint8_t *dst) const {
 	}
 }
 
-inline void Sprite::render(RenderMode mode, int x, int y, int w, const uint8_t *raster, uint8_t *dst) const {
+void Sprite::render(RenderMode mode, int x, int y, int w, const uint8_t *raster, uint8_t *dst) const {
 	if (y < -7 || y >= height_) return;
 	if (x < 0) {
 		w += x;

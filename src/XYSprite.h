@@ -36,8 +36,7 @@ public:
 	void render(int page_num, uint8_t *page) const;
 
 private:
-	inline void render(Sprite::RenderMode render_mode, const Sprite *sprite_, int page_num, uint8_t *page) const;
-
+	void render(Sprite::RenderMode render_mode, const Sprite *sprite_, int page_num, uint8_t *page) const;
 
 	uint8_t mode_;
 	const Sprite *foreground_;
