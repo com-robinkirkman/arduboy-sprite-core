@@ -31,8 +31,8 @@ public:
 
 	static void begin();
 	static void display(XYSprite* sprites, size_t len);
-	static void display(List<XYSprite>* sprites);
-	static void display(List<List<XYSprite>*>* sprites);
+	static void display(List<XYSprite>& sprites);
+	static void display(List<List<XYSprite>*>& sprites);
 	static void write(int x, int y, const char *text, XYSprite *sprites);
 };
 

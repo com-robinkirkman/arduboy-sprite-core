@@ -13,19 +13,20 @@ void SpriteCore::begin() {
 
 void SpriteCore::display(XYSprite *sprites, size_t len) {
 	List<XYSprite> list = {sprites, len};
-	display(&list);
+	display(list);
 }
 
-void SpriteCore::display(List<XYSprite>* sprites) {
-	List<List<XYSprite>*> lists = {&sprites, 1};
-	display(&lists);
+void SpriteCore::display(List<XYSprite>& sprites) {
+	List<XYSprite> *list = &sprites;
+	List<List<XYSprite>*> lists = {&list, 1};
+	display(lists);
 }
-void SpriteCore::display(List<List<XYSprite>*>* sprites) {
+void SpriteCore::display(List<List<XYSprite>*>& sprites) {
 	uint8_t page[WIDTH];
 	for (int n = 0; n < HEIGHT / 8; ++n) {
 		memset(page, 0, WIDTH);
-		for (size_t i = 0; i < sprites->len; ++i) {
-			const List<XYSprite>* list = sprites->data[i];
+		for (size_t i = 0; i < sprites.len; ++i) {
+			const List<XYSprite>* list = sprites.data[i];
 			for (size_t j = 0; j < list->len; ++j) {
 				const XYSprite& sprite = list->data[j];
 				sprite.render(n, page);
