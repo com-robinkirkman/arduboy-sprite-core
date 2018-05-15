@@ -22,11 +22,7 @@ public:
 
 	template <typename T, size_t N> struct StaticList {
 		T data[N];
-		size_t len = N;
-
-		operator List<T> const() {
-			return List<T> { data, len };
-		}
+		List<T> list = { data, N };
 	};
 
 	static void begin();
