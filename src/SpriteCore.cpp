@@ -20,3 +20,10 @@ void SpriteCore::display(const XYSprite *sprites, int len) {
 		SPI.transfer(page, width());
 	}
 }
+
+void SpriteCore::write(const char *text, uint8_t *raster) {
+	for (; *text; text += 1, raster += 6) {
+		Sprite::setFontRaster(*text, raster);
+		raster[5] = 0;
+	}
+}
