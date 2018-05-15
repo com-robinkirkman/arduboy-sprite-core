@@ -12,12 +12,12 @@ void SpriteCore::begin() {
 }
 
 void SpriteCore::display(const XYSprite *sprites, int len) {
-	uint8_t page[width()];
-	for (int n = 0; n < height() / 8; ++n) {
-		memset(page, 0, width());
+	uint8_t page[WIDTH];
+	for (int n = 0; n < HEIGHT / 8; ++n) {
+		memset(page, 0, WIDTH);
 		for (int i = 0; i < len; ++i)
 			sprites[i].render(n, page);
-		SPI.transfer(page, width());
+		SPI.transfer(page, WIDTH);
 	}
 }
 
