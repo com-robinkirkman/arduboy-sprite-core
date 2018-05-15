@@ -37,6 +37,8 @@ Sprite::Sprite(uint8_t width, uint8_t height, const uint8_t *raster, bool progme
 Sprite::Sprite(unsigned char c) : Sprite(5, 7, font + 5 * c, true) {}
 
 void Sprite::render(RenderMode mode, int x, int y, int w, uint8_t *dst) const {
+	if (!raster_)
+		return;
 	if (progmem_) {
 		int len = rasterLength(width_, height_);
 		uint8_t raster[len];

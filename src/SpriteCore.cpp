@@ -21,9 +21,14 @@ void SpriteCore::display(const XYSprite *sprites, int len) {
 	}
 }
 
-void SpriteCore::write(const char *text, uint8_t *raster) {
-	for (; *text; text += 1, raster += 6) {
-		Sprite::setFontRaster(*text, raster);
-		raster[5] = 0;
+void SpriteCore::write(int x, int y, const char *text, XYSprite *sprites) {
+	uint8_t bg_raster[5];
+	Sprite bg(5, 7, bg_raster);
+	for (; *text; ++text, ++sprites) {
+		sprites->setX(x);
+		sprites->setY(y);
+		sprites->setForeground(Sprite(*text));
+		sprites->setBackground(bg);
+		sprites->setMode(XYSprite::RasterMode::kWhiteOnBlack);
 	}
 }

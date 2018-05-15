@@ -17,7 +17,7 @@ class SpriteCore : public ArduboyCore {
 public:
 	static void begin();
 	static void display(const XYSprite *sprites, int len);
-	static void write(const char *text, uint8_t *raster);
+	static void write(int x, int y, const char *text, XYSprite *sprites);
 };
 
 #endif /* SRC_SPRITECORE_H_ */
