@@ -40,16 +40,13 @@ void Sprite::render(RenderMode mode, int x, int y, int w, uint8_t *dst) const {
 	if (!raster_)
 		return;
 	if (progmem_) {
-		int len = rasterLength(width_, height_);
-		uint8_t raster[len];
-		memcpy_P(raster, raster_, len);
-		render(mode, x, y, w, raster, dst);
+		renderPgmSpace(mode, x, y, w, dst);
 	} else {
-		render(mode, x, y, w, raster_, dst);
+		renderRamSpace(mode, x, y, w, dst);
 	}
 }
 
-void Sprite::render(RenderMode mode, int x, int y, int w, const uint8_t *raster, uint8_t *dst) const {
+void Sprite::renderRamSpace(RenderMode mode, int x, int y, int w, uint8_t *dst) const {
 	if (y < -7 || y >= height_) return;
 	if (x < 0) {
 		w += x;
@@ -62,7 +59,7 @@ void Sprite::render(RenderMode mode, int x, int y, int w, const uint8_t *raster,
 	int row = y >> 3;
 	int offset = y & 7;
 
-	const uint8_t *r1 = raster + width_ * row + x;
+	const uint8_t *r1 = raster_ + width_ * row + x;
 	if (offset == 0) {
 		if (mode == kAnd) {
 			for (int i = 0; i < w; ++i) *dst++ &= *r1++;
@@ -97,6 +94,58 @@ void Sprite::render(RenderMode mode, int x, int y, int w, const uint8_t *raster,
 			for (int i = 0; i < w; ++i) *dst++ |= ((*r1++ >> offset));
 		} else if (mode == kMask) {
 			for (int i = 0; i < w; ++i) *dst++ &= ~ ((*r1++ >> offset));
+		}
+	}
+}
+
+void Sprite::renderPgmSpace(RenderMode mode, int x, int y, int w, uint8_t *dst) const {
+	if (y < -7 || y >= height_) return;
+	if (x < 0) {
+		w += x;
+		x = 0;
+	}
+	if (x + w >= width_) {
+		w = width_ - x;
+	}
+	if (w <= 0) return;
+	int row = y >> 3;
+	int offset = y & 7;
+
+	const uint8_t *r1 = raster_ + width_ * row + x;
+	if (offset == 0) {
+		if (mode == kAnd) {
+			for (int i = 0; i < w; ++i) *dst++ &= pgm_read_byte(r1++);
+		} else if (mode == kOr) {
+			for (int i = 0; i < w; ++i) *dst++ |= pgm_read_byte(r1++);
+		} else if (mode == kMask) {
+			for (int i = 0; i < w; ++i) *dst++ &= ~ pgm_read_byte(r1++);
+		}
+		return;
+	}
+	const uint8_t *r2 = r1 + width_;
+	if (row >= 0 && 8 * row + 8 < height_) {
+		if (mode == kAnd) {
+			for (int i = 0; i < w; ++i) *dst++ &= ((pgm_read_byte(r2++) << (8 - offset)) | (pgm_read_byte(r1++) >> offset));
+		} else if (mode == kOr) {
+			for (int i = 0; i < w; ++i) *dst++ |= ((pgm_read_byte(r2++) << (8 - offset)) | (pgm_read_byte(r1++) >> offset));
+		} else if (mode == kMask) {
+			for (int i = 0; i < w; ++i) *dst++ &= ~ ((pgm_read_byte(r2++) << (8 - offset)) | (pgm_read_byte(r1++) >> offset));
+		}
+	} else if(row < 0) {
+		if (mode == kAnd) {
+			for (int i = 0; i < w; ++i) *dst++ &= ((pgm_read_byte(r2++) << (8 - offset)));
+		} else if (mode == kOr) {
+			for (int i = 0; i < w; ++i) *dst++ |= ((pgm_read_byte(r2++) << (8 - offset)));
+		} else if (mode == kMask) {
+			for (int i = 0; i < w; ++i) *dst++ &= ~ ((pgm_read_byte(r2++) << (8 - offset)));
+		}
+	} else {
+		if (mode == kAnd) {
+			for (int i = 0; i < w; ++i) *dst++ &= ((pgm_read_byte(r1++) >> offset));
+		} else if (mode == kOr) {
+			for (int i = 0; i < w; ++i) *dst++ |= ((pgm_read_byte(r1++) >> offset));
+		} else if (mode == kMask) {
+			for (int i = 0; i < w; ++i) *dst++ &= ~ ((pgm_read_byte(r1++) >> offset));
 		}
 	}
 }

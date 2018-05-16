@@ -42,7 +42,8 @@ public:
 	void render(RenderMode mode, int x, int y, int w, uint8_t *dst) const;
 
 private:
-	void render(RenderMode mode, int x, int y, int w, const uint8_t *raster, uint8_t *dst) const;
+	void renderRamSpace(RenderMode mode, int x, int y, int w, uint8_t *dst) const;
+	void renderPgmSpace(RenderMode mode, int x, int y, int w, uint8_t *dst) const;
 
 	bool progmem_;
 	uint8_t width_;
