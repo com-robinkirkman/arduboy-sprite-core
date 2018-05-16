@@ -12,23 +12,14 @@
 #include <core/core.h>
 
 #include "XYSprite.h"
+#include "List.h"
 
 class SpriteCore : public ArduboyCore {
 public:
-	template <typename T> struct List {
-		T *data;
-		size_t len;
-	};
-
-	template <typename T, size_t N> struct StaticList {
-		T data[N];
-		List<T> list = { data, N };
-	};
-
 	static void begin();
 	static void display(XYSprite* sprites, size_t len);
-	static void display(List<XYSprite>& sprites);
-	static void display(List<List<XYSprite>*>& sprites);
+	static void display(const List<XYSprite>& sprite_list);
+	static void display(const List<List<XYSprite>*>& sprite_lists);
 	static void write(int x, int y, const char *text, XYSprite *sprites);
 };
 

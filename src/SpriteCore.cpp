@@ -7,34 +7,49 @@
 
 #include <SpriteCore.h>
 
+constexpr size_t kPageWidth = WIDTH;
+constexpr size_t kNumPages = HEIGHT / 8;
+
 void SpriteCore::begin() {
 	ArduboyCore::boot();
 }
 
 void SpriteCore::display(XYSprite *sprites, size_t len) {
-	List<XYSprite> list = {sprites, len};
-	display(list);
-}
-
-void SpriteCore::display(List<XYSprite>& sprites) {
-	List<XYSprite> *list = &sprites;
-	List<List<XYSprite>*> lists = {&list, 1};
-	display(lists);
-}
-void SpriteCore::display(List<List<XYSprite>*>& sprites) {
-	uint8_t page[WIDTH];
-	for (int n = 0; n < HEIGHT / 8; ++n) {
-		memset(page, 0, WIDTH);
-		for (size_t i = 0; i < sprites.len; ++i) {
-			const List<XYSprite>* list = sprites.data[i];
-			for (size_t j = 0; j < list->len; ++j) {
-				const XYSprite& sprite = list->data[j];
-				sprite.render(n, page);
-			}
-		}
-		SPI.transfer(page, WIDTH);
+	uint8_t page[kPageWidth];
+	for (size_t n = 0; n < kNumPages; ++n) {
+		memset(page, 0, kPageWidth);
+		for (size_t i = 0; i < len; ++i)
+			sprites[i].render(n, page);
+		SPI.transfer(page, kPageWidth);
 	}
 }
+
+void SpriteCore::display(const List<XYSprite>& sprite_list) {
+	uint8_t page[kPageWidth];
+	for (size_t n = 0; n < kNumPages; ++n) {
+		memset(page, 0, kPageWidth);
+		for (size_t i = 0; i < sprite_list.size(); ++i) {
+			sprite_list[i].render(n, page);
+		}
+		SPI.transfer(page, kPageWidth);
+	}
+}
+
+void SpriteCore::display(const List<List<XYSprite>*>& sprite_lists) {
+	uint8_t page[kPageWidth];
+	for (size_t n = 0; n < kNumPages; ++n) {
+		memset(page, 0, kPageWidth);
+		for (size_t i = 0; i < sprite_lists.size(); ++i) {
+			const List<XYSprite> *sprite_list = sprite_lists[i];
+			if (!sprite_list) continue;
+			for (size_t j = 0; j < sprite_list->size(); ++j) {
+				(*sprite_list)[j].render(n, page);
+			}
+		}
+		SPI.transfer(page, kPageWidth);
+	}
+}
+
 
 void SpriteCore::write(int x, int y, const char *text, XYSprite *sprites) {
 	uint8_t bg_raster[5];
