@@ -59,8 +59,7 @@ void SpriteCore::write(int x, int y, const char *text, XYSprite *sprites) {
 	for (; *text; ++text, ++sprites, x += 6) {
 		sprites->setX(x);
 		sprites->setY(y);
-		sprites->setForeground(Sprite(*text));
-		sprites->setBackground(bg);
-		sprites->setMode(XYSprite::RasterMode::kWhiteOnBlack);
+		sprites->setSprite(Sprite(*text));
+		sprites->setMode(Sprite::kOr);
 	}
 }

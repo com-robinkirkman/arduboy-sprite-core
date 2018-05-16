@@ -12,14 +12,8 @@
 
 class XYSprite {
 public:
-	enum RasterMode {
-		kNone = 0,
-		kWhiteOnBlack = 1,
-		kBlackOnWhite = 2,
-	};
-
-	XYSprite() : XYSprite(0, 0, kNone, {}, {}) {}
-	XYSprite(int x, int y, RasterMode mode, const Sprite& foreground, const Sprite& background);
+	XYSprite() : XYSprite(0, 0, Sprite::kNone, {}) {}
+	XYSprite(int x, int y, Sprite::RenderMode mode, const Sprite sprite);
 
 	int x() const { return x_; }
 	int y() const { return y_; }
@@ -27,23 +21,18 @@ public:
 	void setX(int x) { x_ = x; }
 	void setY(int y) { y_ = y; }
 
-	const Sprite& foreground() const { return foreground_; }
-	const Sprite& background() const { return background_; }
+	const Sprite sprite() const { return sprite_; }
 
-	void setForeground(const Sprite foreground) { foreground_ = foreground; }
-	void setBackground(const Sprite background) { background_ = background; }
+	void setSprite(const Sprite sprite) { sprite_ = sprite; }
 
-	RasterMode mode() { return (RasterMode) mode_; }
-	void setMode(RasterMode mode) { mode_ = mode; }
+	Sprite::RenderMode mode() { return (Sprite::RenderMode) mode_; }
+	void setMode(Sprite::RenderMode mode) { mode_ = mode; }
 
 	void render(int page_num, uint8_t *page) const;
 
 private:
-	void render(Sprite::RenderMode render_mode, const Sprite& sprite, int page_num, uint8_t *page) const;
-
 	uint8_t mode_;
-	Sprite foreground_;
-	Sprite background_;
+	Sprite sprite_;
 	int x_;
 	int y_;
 };
