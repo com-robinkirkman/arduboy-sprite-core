@@ -31,13 +31,15 @@ void XYSprite::render(int page_num, uint8_t *page, Sprite::RenderMode mode) cons
 
 bool XYSprite::intersects(const XYSprite& other) const {
 	// Naive implementation, does a whole display render first in OR and then in AND.
-	uint8_t page[128];
+	uint8_t page1[128];
+	uint8_t page2[128];
 	for (int n = 0; n < 8; ++n) {
-		memset(page, 0, sizeof(page));
-		render(n, page, Sprite::kOr);
-		other.render(n, page, Sprite::kAnd);
+		memset(page1, 0, 128);
+		memset(page2, 0, 128);
+		render(n, page1, Sprite::kOr);
+		other.render(n, page2, Sprite::kOr);
 		for (int i = 0; i < 128; ++i) {
-			if (page[i])
+			if (page1[i] & page2[i])
 				return true;
 		}
 	}
