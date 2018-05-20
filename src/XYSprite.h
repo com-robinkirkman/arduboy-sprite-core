@@ -29,6 +29,9 @@ public:
 	void setMode(Sprite::RenderMode mode) { mode_ = mode; }
 
 	void render(int page_num, uint8_t *page) const;
+	void render(int page_num, uint8_t *page, Sprite::RenderMode mode) const;
+
+	bool intersects(const XYSprite& other) const;
 
 private:
 	uint8_t mode_;
