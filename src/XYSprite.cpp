@@ -29,20 +29,29 @@ void XYSprite::render(int page_num, uint8_t *page, Sprite::RenderMode mode) cons
 	sprite_.render(mode, 0, page_y - y_, width, page + x_);
 }
 
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+
 bool XYSprite::intersects(const XYSprite& other) const {
-	// Naive implementation, does a whole display render first in OR and then in AND.
-	uint8_t page1[128];
-	uint8_t page2[128];
-	for (int n = 0; n < 8; ++n) {
-		memset(page1, 0, 128);
-		memset(page2, 0, 128);
-		render(n, page1, Sprite::kOr);
-		other.render(n, page2, Sprite::kOr);
-		for (int i = 0; i < 128; ++i) {
-			if (page1[i] & page2[i])
+	int l = MAX(left(), other.left());
+	int r = MIN(right(), other.right());
+	if (r - l < 0)
+		return false;
+	int t = MAX(top(), other.top());
+	int b = MIN(bottom(), other.bottom());
+	if (b - t < 0)
+		return false;
+
+	for (int y = t; y <= b; y += 8) {
+		for (int x = l; x <= r; ++x) {
+			uint8_t r1 = 0, r2 = 0;
+			sprite().render(Sprite::kOr, x - this->x(), y - this->y(), 1, &r1);
+			other.sprite().render(Sprite::kOr, x - other.x(), y - other.y(), 1, &r2);
+			if (r1 & r2)
 				return true;
 		}
 	}
+
 	return false;
 }
 

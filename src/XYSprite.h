@@ -33,6 +33,11 @@ public:
 
 	bool intersects(const XYSprite& other) const;
 
+	int top() const { return y(); }
+	int bottom() const { return y() + sprite().height() - 1; }
+	int left() const { return x(); }
+	int right() const { return x() + sprite().width() - 1; }
+
 private:
 	uint8_t mode_;
 	Sprite sprite_;
