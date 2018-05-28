@@ -19,7 +19,7 @@ void SpriteGfx::drawPixel(int16_t x, int16_t y, uint16_t color) {
 	int row = y >> 3;
 	uint8_t *px = buf_ + row * width() + x;
 	uint8_t mask = 1 << (y & 7);
-	if (color == INVERT) color = (*px & mask) ? BLACK : WHITE;
-	if (color == BLACK) *px &= ~mask;
-	else if(color == WHITE) *px |= mask;
+	if (color == kInvert) color = (*px & mask) ? kBlack : kWhite;
+	if (color == kBlack) *px &= ~mask;
+	else if(color == kWhite) *px |= mask;
 }

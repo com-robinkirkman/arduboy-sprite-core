@@ -13,9 +13,9 @@
 class SpriteGfx : public Adafruit_GFX {
 public:
 	static int bytesRequired(int w, int h);
-	static constexpr int BLACK = 0;
-	static constexpr int WHITE = 1;
-	static constexpr int INVERT = 2;
+	static constexpr int kBlack= 0;
+	static constexpr int kWhite = 1;
+	static constexpr int kInvert = 2;
 
 	SpriteGfx(int w, int h, uint8_t *buf);
 	virtual ~SpriteGfx() = default;
