@@ -18,6 +18,9 @@
 
 class SpriteCore : public ArduboyCore {
 public:
+	static constexpr int EEPROM_STORAGE_SPACE_START = 16;
+
+
 	static void begin();
 	static void display(const XYSprite* sprites, size_t len);
 	static void display(const List<XYSprite>& sprite_list);
