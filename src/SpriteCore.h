@@ -10,6 +10,8 @@
 
 #include <EEPROM.h>
 #include <core/core.h>
+#undef WIDTH
+#undef HEIGHT
 
 #include "XYSprite.h"
 #include "List.h"

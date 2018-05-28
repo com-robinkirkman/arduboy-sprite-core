@@ -7,8 +7,8 @@
 
 #include <SpriteCore.h>
 
-constexpr size_t kPageWidth = WIDTH;
-constexpr size_t kNumPages = HEIGHT / 8;
+constexpr size_t kPageWidth = 128;
+constexpr size_t kNumPages = 8;
 
 void SpriteCore::begin() {
 	ArduboyCore::boot();
