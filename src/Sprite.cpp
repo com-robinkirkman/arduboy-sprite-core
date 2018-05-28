@@ -7,7 +7,9 @@
 
 #include "Sprite.h"
 
-#include <glcdfont.c>
+#include <avr/pgmspace.h>
+
+extern const unsigned char font[];
 
 void Sprite::transverseRaster(uint8_t *raster, uint8_t width, uint8_t height, uint8_t col_bytes, uint8_t *data) {
 	for (uint8_t y = 0; y < height; ++y) {
