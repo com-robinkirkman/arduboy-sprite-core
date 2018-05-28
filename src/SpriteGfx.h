@@ -8,6 +8,13 @@
 #ifndef SRC_SPRITEGFX_H_
 #define SRC_SPRITEGFX_H_
 
+#ifdef WIDTH
+#undef WIDTH
+#endif
+#ifdef HEIGHT
+#undef HEIGHT
+#endif
+
 #include <Adafruit_GFX.h>
 
 class SpriteGfx : public Adafruit_GFX {
