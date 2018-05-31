@@ -17,7 +17,7 @@ public:
 	size_t size() const { return len_; }
 	inline T& operator[](int index) { return buf_[index]; }
 	inline const T& operator[](int index) const { return buf_[index]; }
-private:
+
 	T *buf_;
 	size_t len_;
 };
@@ -26,7 +26,7 @@ template<typename T, int LEN>
 class ArrayList : public List<T> {
 public:
 	ArrayList() : List<T>(array_, LEN) {}
-private:
+
 	T array_[LEN];
 };
 
