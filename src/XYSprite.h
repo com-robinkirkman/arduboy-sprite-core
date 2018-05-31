@@ -28,8 +28,8 @@ public:
 	Sprite::RenderMode mode() { return (Sprite::RenderMode) mode_; }
 	void setMode(Sprite::RenderMode mode) { mode_ = mode; }
 
-	void render(int page_num, uint8_t *page) const;
-	void render(int page_num, uint8_t *page, Sprite::RenderMode mode) const;
+	void render(uint8_t page_num, uint8_t *page) const;
+	void render(uint8_t page_num, uint8_t *page, Sprite::RenderMode mode) const;
 
 	bool intersects(const XYSprite& other) const;
 

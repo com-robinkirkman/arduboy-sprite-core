@@ -12,7 +12,7 @@
 
 class SpriteGfx : public Adafruit_GFX {
 public:
-	static int bytesRequired(int w, int h);
+	static uint16_t bytesRequired(uint8_t w, uint8_t h);
 	static constexpr int kBlack= 0;
 	static constexpr int kWhite = 1;
 	static constexpr int kInvert = 2;
