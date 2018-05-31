@@ -21,22 +21,22 @@ public:
 	void setX(int x) { x_ = x; }
 	void setY(int y) { y_ = y; }
 
-	const Sprite sprite() const { return sprite_; }
+	inline const Sprite sprite() const { return sprite_; }
 
-	void setSprite(const Sprite sprite) { sprite_ = sprite; }
+	inline void setSprite(const Sprite sprite) { sprite_ = sprite; }
 
-	Sprite::RenderMode mode() { return (Sprite::RenderMode) mode_; }
-	void setMode(Sprite::RenderMode mode) { mode_ = mode; }
+	inline Sprite::RenderMode mode() { return (Sprite::RenderMode) mode_; }
+	inline void setMode(Sprite::RenderMode mode) { mode_ = mode; }
 
 	void render(uint8_t page_num, uint8_t *page) const;
 	void render(uint8_t page_num, uint8_t *page, Sprite::RenderMode mode) const;
 
 	bool intersects(const XYSprite& other) const;
 
-	int top() const { return y(); }
-	int bottom() const { return y() + sprite().height() - 1; }
-	int left() const { return x(); }
-	int right() const { return x() + sprite().width() - 1; }
+	inline int top() const { return y(); }
+	inline int bottom() const { return y() + sprite().height() - 1; }
+	inline int left() const { return x(); }
+	inline int right() const { return x() + sprite().width() - 1; }
 
 private:
 	uint8_t mode_;

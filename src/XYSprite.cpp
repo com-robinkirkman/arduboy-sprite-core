@@ -33,12 +33,12 @@ void XYSprite::render(uint8_t page_num, uint8_t *page, Sprite::RenderMode mode) 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
 bool XYSprite::intersects(const XYSprite& other) const {
-	int l = MAX(left(), other.left());
-	int r = MIN(right(), other.right());
+	int l = left(), other_l = other.left(); if (other_l > l) l = other_l;
+	int r = right(), other_r = other.right(); if (other_r < r) r = other_r;
 	if (r - l < 0)
 		return false;
-	int t = MAX(top(), other.top());
-	int b = MIN(bottom(), other.bottom());
+	int t = top(), other_t = other.top(); if (other_t > t) t = other_t;
+	int b = bottom(), other_b = other.bottom(); if (other_b < b) b = other_b;
 	if (b - t < 0)
 		return false;
 

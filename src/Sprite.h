@@ -35,9 +35,9 @@ public:
 
 	Sprite(unsigned char c);
 
-	uint8_t width() const { return width_; }
-	uint8_t height() const { return height_; }
-	const uint8_t *raster() const { return raster_; }
+	inline uint8_t width() const { return width_; }
+	inline uint8_t height() const { return height_; }
+	inline const uint8_t *raster() const { return raster_; }
 
 	void render(RenderMode mode, int x, int y, int w, uint8_t *dst) const;
 
